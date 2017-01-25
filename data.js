@@ -1,7 +1,7 @@
 var data = [
 	{
 		"id": 272822514,
-		"firstName": "Billy", //data[0].firstName(property)
+		"firstName": "Billy",
 		"lastName": "Bob",
 		"gender": "male",
 		"dob": "1/18/1949",
@@ -10,7 +10,7 @@ var data = [
 		"eyeColor": "brown",
 		"occupation": "programmer",
 		"parents": [],
-		"currentSpouse": 401222887 
+		"currentSpouse": 401222887
 	},
 	{
 		"id": 401222887,
