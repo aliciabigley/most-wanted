@@ -46,7 +46,7 @@ function initSearchByName(people, firstName, lastName){
 			return false;
 		}
 	});
-	alertNameSearch(people, nameSearchValue)
+	alertNameSearch(people, nameSearchValue);
 }
 
 function alertNameSearch(people, nameSearchValue) {
@@ -64,8 +64,22 @@ function alertNameSearch(people, nameSearchValue) {
 			initSearch(people);
 	}
 }
-
-// 	function initSearchByTraits() {
+// function whichTraitsSearch(people){
+// 	var chooseTrait = prompt("Would you like to search by [1] trait or [2] many traits.");
+// 	switch (chooseTrait) {
+// 		case "1":
+// 			SearchByTrait(people);
+// 			break;
+// 			case "2":
+// 				//insert search many traits
+// 				break;
+// 		default:
+// 			alert("Oops! That's not an option.");
+// 		whichTraitsSearch(people);
+//
+// 	}
+// }
+// 	function SearchByTrait() {
 // 		var searchTraits = prompt("What would you like to search by?\n\n Age [1], Height [2], Weight [3], Eye Color [4], Occupation [5]");
 // 			switch(searchType){
 // 				case "1":
@@ -85,14 +99,13 @@ function alertNameSearch(people, nameSearchValue) {
 // 					break;
 // 				default:
 // 					alert("Oops! That's not an option.");
-// 					initSearchByTraits(people);
+// 					SearchByTraits(people);
 // 					break;
 // 	}
 // }
 
-
 	// function determineWhatTraits(people) {
-	// 	var searchTraits = prompt("Enter all of the numbers of the traits you would like to search.\n Note: you may enter more than one number. \n [1] Eye Color, [2] Height, [3] Weight, [4] Age, [5]")
+	// 	var searchTraits = prompt("Search by multiple traits. Your options are Eye Color, Height, Weight, Age, or Occupation. \nPlease type your search terms, separated by commas")
 	// }
 	function descendantPrompt(people){
 	var firstName = prompt("Please type in the FIRST NAME of the person who's descendants you would like to see");
@@ -109,23 +122,35 @@ function alertNameSearch(people, nameSearchValue) {
 				return false;
 			}
 		});
-		nameSearchForDescendants(people, nameSearchValue)
+		nameSearchForDescendants(people, nameSearchValue);
 	}
 
 	function nameSearchForDescendants(people, nameSearchValue){
 		try{
-			return nameSearchValue.id;
+			var searchId = nameSearchValue[0].id;
 		}
 		catch(err){
-				alert("We couldn't find anyone with that name on the Most Wanted List. ");
+				alert("We couldn't find anyone with that name on the Most Wanted List.");
 				initSearch(people);
 		}
-		findDescendants(people, nameSearchValue.id)
+	findDescendants(people, searchId, hold = [])
 	}
-var descendants = findDescendants (people, nameSearchValue.id){
-	people.id.map()
+
+	function findDescendants(people, searchId, hold = []){
+	var listOfDescendants = people.filter(function(person){
+		if(person.parents[0] === searchId || person.parents[1] === searchId){
+				return true;
+			}
+			else{
+				return false;
+			}
+		});
+
+alertDescendants(people,listOfDescendants)
+		// hold = listOfDescendants;
+		// findDescendants(people, searchId, hold = []);
+		// alert(hold);
 }
-	//function findDescendants(people, nameSearchValue.id) {
-
-
-	//}
+function alertDescendants(people, listOfDescendants) {
+	alert(listOfDescendants);
+}
