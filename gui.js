@@ -133,10 +133,10 @@ function alertNameSearch(people, nameSearchValue) {
 				alert("We couldn't find anyone with that name on the Most Wanted List.");
 				initSearch(people);
 		}
-	findDescendants(people, searchId, hold = [])
+	findDescendants(people, searchId);
 	}
 
-	function findDescendants(people, searchId, hold = []){
+	function findDescendants(people, searchId, holdDescendants = [], i = -1){
 	var listOfDescendants = people.filter(function(person){
 		if(person.parents[0] === searchId || person.parents[1] === searchId){
 				return true;
@@ -145,12 +145,17 @@ function alertNameSearch(people, nameSearchValue) {
 				return false;
 			}
 		});
-
-alertDescendants(people,listOfDescendants)
-		// hold = listOfDescendants;
-		// findDescendants(people, searchId, hold = []);
-		// alert(hold);
+		holdDescendants = holdDescendants.concat(listOfDescendants);
+		if(i < holdDescendants.length -1){
+			i++
+			return findDescendants(people, holdDescendants[i].id, holdDescendants, i);
+		}
+		else{
+			alertDescendants(people, holdDescendants);
+		}
 }
-function alertDescendants(people, listOfDescendants) {
-	alert(listOfDescendants);
+function alertDescendants(people, holdDescendants){
+	alert(holdDescendants);
 }
+// then rerun listOfDescendants
+// add to holdDescendants or display holdDescendants
