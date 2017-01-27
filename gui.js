@@ -129,22 +129,22 @@ calculateAgeFromDOB(people, age);
 function searchAge(people, birthYear){
 	var	ageSearchValue = people.filter(function(person){
 		if(person.dob.slice(-4) === birthYear){
-			return true;
+			return person.firstName && person.lastName;
 		}
 		else{
 			return false;
 		}
 	});
-	alertAge(people,ageSearchValue);
+	pullAgeInfo(people,ageSearchValue);
 }
 
-function pullAgeInfo(people, holdDescendants, descendantName ){
-    for (var i=0; i < holdDescendants.length; i++) {
-        if (holdDescendants[i].name === descendantName) {
-            alertDescendants(holdDescendants[i]);
-        }
+function pullAgeInfo(people, ageSearchValue){
+    for (var i=0; i < ageSearchValue.length; i++) {
+      alertDescendants(ageSearchValue[i]);
     }
 }
+
+
 function alertAge(people, ageSearchValue) {
 
 alert(ageSearchValue);
