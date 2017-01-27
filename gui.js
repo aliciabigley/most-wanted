@@ -16,13 +16,6 @@ var searchType = prompt("What would you like to search by? Name [1], Traits [2],
 			break;
 	}
 }
-// function loopPrompt(people, question){
-// 	do{ //prompt the user until the enter answer question
-
-// 	}
-// 	while();
-
-// }
 
 function namePrompt(people){
 var firstName = prompt("Please type in the FIRST NAME of the person you would like to search for.");
@@ -30,6 +23,7 @@ var lastName = prompt("Please type in the LAST NAME of the person you would like
 initSearchByName(people, firstName, lastName);
 }
 
+//short hand filter code- fix your others if you have time
 // function initSearchByName(people, firstName, lastName){
 // 	return people.filter(function(person){ //you can remove people.filter
 // 		retun person.firstName.toLowerCase() === firstName.toLowerCase() && person.lastName.toLowerCase() === lastName.toLowerCase()){
@@ -64,49 +58,87 @@ function alertNameSearch(people, nameSearchValue) {
 			initSearch(people);
 	}
 }
-// function whichTraitsSearch(people){
-// 	var chooseTrait = prompt("Would you like to search by [1] trait or [2] many traits.");
-// 	switch (chooseTrait) {
-// 		case "1":
-// 			SearchByTrait(people);
-// 			break;
-// 			case "2":
-// 				//insert search many traits
-// 				break;
-// 		default:
-// 			alert("Oops! That's not an option.");
-// 		whichTraitsSearch(people);
-//
-// 	}
-// }
-// 	function SearchByTrait() {
-// 		var searchTraits = prompt("What would you like to search by?\n\n Age [1], Height [2], Weight [3], Eye Color [4], Occupation [5]");
-// 			switch(searchType){
-// 				case "1":
-// 					agePrompt(people);
-// 					break;
-// 				case "2":
-// 					heightPrompt(people);
-// 					break;
-// 				case "3":
-// 					weightPrompt(people);
-// 					break;
-// 				case "4":
-// 					eyePrompt(people);
-// 					break;
-// 				case "5":
-// 					occupationPrompt(people);
-// 					break;
-// 				default:
-// 					alert("Oops! That's not an option.");
-// 					SearchByTraits(people);
-// 					break;
-// 	}
-// }
+function whichTraitsSearch(people){
+	var chooseTrait = prompt("Would you like to search by [1] trait or [2] many traits.");
+	switch (chooseTrait) {
+		case "1":
+			SearchByOneTrait(people);
+			break;
+			case "2":
+			searchAllTraits(people);
+				break;
+		default:
+			alert("Oops! That's not an option.");
+		whichTraitsSearch(people);
+	}
+}
+	function SearchByOneTrait() {
+		// var searchTraits = prompt("What would you like to search by?\n\n Age [1], Height [2], Weight [3], Eye Color [4], Occupation [5]");
+			switch(searchType){
+				case "1":
+					agePrompt(people);
+					break;
+				case "2":
+					heightPrompt(people);
+					break;
+				case "3":
+					weightPrompt(people);
+					break;
+				case "4":
+					eyePrompt(people);
+					break;
+				case "5":
+					occupationPrompt(people);
+					break;
+				default:
+					alert("Oops! That's not an option.");
+					SearchByTraits(people);
+					break;
+	//}
+}
+function agePrompt(people){
+var searchAge = prompt("How old is the person you are looking for?")
+calculateAge(people, searchAge)
+}
 
-	// function determineWhatTraits(people) {
-	// 	var searchTraits = prompt("Search by multiple traits. Your options are Eye Color, Height, Weight, Age, or Occupation. \nPlease type your search terms, separated by commas")
-	// }
+function calculateAge(people, searchAge) {
+	var convertAge = parseInt(searchAge);
+	var convertDOB = new Date(people.dob);
+	var today = new Date();
+	var dobAge = today.getFullYear() - convertDOB;
+
+
+	var	ageSearchValue = people.filter(function(year){
+		if(year.firstName === searchAge){
+			return true;
+		}
+		else{
+			return false;
+		}
+	});
+	alertAge(people, ageSearchValue);
+}
+function alertAge(people) {
+
+}
+
+
+function heightPrompt(people){
+	var searchHeight = prompt("How tall is the person you are looking for ex: 5' 7''?")
+}
+function weightPrompt(){
+	var searchWeight = prompt("How much does the person you are looking for weight (lbs)?")
+}
+function eyePrompt(people){
+	var searchEyeColor = prompt("What color eyes would you like to search? [1] Blue, [2] Green, [3] Brown, [4] Black, [5] Hazel, [6] All other colors")
+}
+function occupationPrompt(people) {
+	var searchOccupation = prompt("What occupation would you like to search?")
+}
+	function searchAllTraits(people) {
+		var searchTraits = prompt("Search by multiple traits. Your options are Eye Color, Height, Weight, Age, or Occupation. \nPlease type your search terms, separated by commas")
+	}
+
 	function descendantPrompt(people){
 	var firstName = prompt("Please type in the FIRST NAME of the person who's descendants you would like to see");
 	var lastName = prompt("Please type in the LAST NAME of the person who's descendants you would like to see");
@@ -151,11 +183,21 @@ function alertNameSearch(people, nameSearchValue) {
 			return findDescendants(people, holdDescendants[i].id, holdDescendants, i);
 		}
 		else{
-			alertDescendants(people, holdDescendants);
+			pullDescendantInfo(people, holdDescendants);
 		}
 }
-function alertDescendants(people, holdDescendants){
-	alert(holdDescendants);
+
+function pullDescendantInfo(people, holdDescendants, descendantName ){
+    for (var i=0; i < holdDescendants.length; i++) {
+        if (holdDescendants[i].name === descendantName) {
+            alertDescendants(holdDescendants[i]);
+        }
+    }
 }
+function alertDescendants(holdDescendants){
+	alert("Here are of the descendants:" + " " + holdDescendants.firstName + " " + holdDescendants.lastName)
+}
+
+
 // then rerun listOfDescendants
 // add to holdDescendants or display holdDescendants
