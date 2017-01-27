@@ -5,7 +5,7 @@ var searchType = prompt("What would you like to search by? Name [1], Traits [2],
 			namePrompt(people);
 			break;
 		case "2":
-			//initSearchByTraits(people);
+			whichTraitsSearch(people);
 			break;
 			case "3":
 				descendantPrompt(people);
@@ -16,6 +16,9 @@ var searchType = prompt("What would you like to search by? Name [1], Traits [2],
 			break;
 	}
 }
+
+
+
 
 function namePrompt(people){
 var firstName = prompt("Please type in the FIRST NAME of the person you would like to search for.");
@@ -31,6 +34,9 @@ initSearchByName(people, firstName, lastName);
 // 	});
 	// alertNameSearch(people, nameSearchValue)
 //}
+
+
+
 function initSearchByName(people, firstName, lastName){
 	var nameSearchValue =  people.filter(function(person){ //you can remove people.filter
 		if(person.firstName.toLowerCase() === firstName.toLowerCase() && person.lastName.toLowerCase() === lastName.toLowerCase()){
@@ -43,6 +49,9 @@ function initSearchByName(people, firstName, lastName){
 	alertNameSearch(people, nameSearchValue);
 }
 
+
+
+
 function alertNameSearch(people, nameSearchValue) {
 	try{
 	alert("Here are your search results:\n" + nameSearchValue[0].firstName + " " + nameSearchValue[0].lastName +
@@ -54,10 +63,13 @@ function alertNameSearch(people, nameSearchValue) {
 	"\nOccupation:"+ nameSearchValue[0].occupation);
 	}
 	catch(err){
-			alert("We couldn't find anyone with that name on the Most Wanted List. ");
+			alert("We couldn't find anyone with that name on the Most Wanted List.");
 			initSearch(people);
 	}
 }
+
+
+
 function whichTraitsSearch(people){
 	var chooseTrait = prompt("Would you like to search by [1] trait or [2] many traits.");
 	switch (chooseTrait) {
@@ -72,9 +84,13 @@ function whichTraitsSearch(people){
 		whichTraitsSearch(people);
 	}
 }
-	function SearchByOneTrait() {
-		// var searchTraits = prompt("What would you like to search by?\n\n Age [1], Height [2], Weight [3], Eye Color [4], Occupation [5]");
-			switch(searchType){
+
+
+
+
+	function SearchByOneTrait(people) {
+		var searchTraits = prompt("What would you like to search by?\n\n Age [1], Height [2], Weight [3], Eye Color [4], Occupation [5]");
+			switch(searchTraits){
 				case "1":
 					agePrompt(people);
 					break;
@@ -92,51 +108,63 @@ function whichTraitsSearch(people){
 					break;
 				default:
 					alert("Oops! That's not an option.");
-					SearchByTraits(people);
+					SearchByOneTrait(people);
 					break;
-	//}
+	}
 }
+
 function agePrompt(people){
-var searchAge = prompt("How old is the person you are looking for?")
-calculateAge(people, searchAge)
+var age = prompt("How old is the person you are looking for?");
+calculateAgeFromDOB(people, age);
 }
 
-function calculateAge(people, searchAge) {
-	var convertAge = parseInt(searchAge);
-	var convertDOB = new Date(people.dob);
-	var today = new Date();
-	var dobAge = today.getFullYear() - convertDOB;
+	function calculateAgeFromDOB(people, age){
+		var today = new Date();
+		var birthDate = parseInt(age);
+		var ageYear = today.getFullYear() - birthDate;
+		var birthYear = ageYear.toString();
+		searchAge (people, birthYear);
+}
 
-
-	var	ageSearchValue = people.filter(function(year){
-		if(year.firstName === searchAge){
+function searchAge(people, birthYear){
+	var	ageSearchValue = people.filter(function(person){
+		if(person.dob.slice(-4) === birthYear){
 			return true;
 		}
 		else{
 			return false;
 		}
 	});
-	alertAge(people, ageSearchValue);
+	alertAge(people,ageSearchValue);
 }
-function alertAge(people) {
 
+function pullAgeInfo(people, holdDescendants, descendantName ){
+    for (var i=0; i < holdDescendants.length; i++) {
+        if (holdDescendants[i].name === descendantName) {
+            alertDescendants(holdDescendants[i]);
+        }
+    }
+}
+function alertAge(people, ageSearchValue) {
+
+alert(ageSearchValue);
 }
 
 
 function heightPrompt(people){
-	var searchHeight = prompt("How tall is the person you are looking for ex: 5' 7''?")
+	var searchHeight = prompt("How tall is the person you are looking for ex: 5' 7''?");
 }
 function weightPrompt(){
-	var searchWeight = prompt("How much does the person you are looking for weight (lbs)?")
+	var searchWeight = prompt("How much does the person you are looking for weight (lbs)?");
 }
 function eyePrompt(people){
-	var searchEyeColor = prompt("What color eyes would you like to search? [1] Blue, [2] Green, [3] Brown, [4] Black, [5] Hazel, [6] All other colors")
+	var searchEyeColor = prompt("What color eyes would you like to search? [1] Blue, [2] Green, [3] Brown, [4] Black, [5] Hazel, [6] All other colors");
 }
 function occupationPrompt(people) {
-	var searchOccupation = prompt("What occupation would you like to search?")
+	var searchOccupation = prompt("What occupation would you like to search?");
 }
 	function searchAllTraits(people) {
-		var searchTraits = prompt("Search by multiple traits. Your options are Eye Color, Height, Weight, Age, or Occupation. \nPlease type your search terms, separated by commas")
+		var searchTraits = prompt("Search by multiple traits. Your options are Eye Color, Height, Weight, Age, or Occupation. \nPlease type your search terms, separated by commas");
 	}
 
 	function descendantPrompt(people){
@@ -178,8 +206,10 @@ function occupationPrompt(people) {
 			}
 		});
 		holdDescendants = holdDescendants.concat(listOfDescendants);
+
+
 		if(i < holdDescendants.length -1){
-			i++
+			i++;
 			return findDescendants(people, holdDescendants[i].id, holdDescendants, i);
 		}
 		else{
@@ -195,9 +225,5 @@ function pullDescendantInfo(people, holdDescendants, descendantName ){
     }
 }
 function alertDescendants(holdDescendants){
-	alert("Here are of the descendants:" + " " + holdDescendants.firstName + " " + holdDescendants.lastName)
+	alert("Here are of the descendants:" + " " + holdDescendants.firstName + " " + holdDescendants.lastName);
 }
-
-
-// then rerun listOfDescendants
-// add to holdDescendants or display holdDescendants
