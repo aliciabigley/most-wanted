@@ -112,7 +112,7 @@ function whichTraitsSearch(people){
 					break;
 	}
 }
-
+///AgeStart
 function agePrompt(people){
 var age = prompt("How old is the person you are looking for?");
 calculateAgeFromDOB(people, age);
@@ -143,15 +143,9 @@ function pullAgeInfo(people, ageSearchValue){
       alertSeach(ageSearchValue[i]);
     }
 }
+////AgeEnd
 
-// function alertAge(people, ageSearchValue) {
-// alert("This person meets your age search:" + " " + ageSearchValue.firstName + " " + ageSearchValue.lastName + "\nDOB:" + " " + ageSearchValue.dob);
-// }
-
-
-
-
-
+////HeightStart
 function heightPrompt(people){
 	var height = prompt("How tall is the person you are looking for ex: 5' 7''?");
 	heightConvert(people, height);
@@ -184,44 +178,56 @@ function pullheightInfo(people, height){
       alertSeach(height[i]);
     }
 }
-// function alertheight(people, height, i) {
-// alert("This person meets your height search:" + " " + height[i].firstName + " " + height[i]. lastName);
-// }
+/////Height End
 
-// function pullheightInfo(people, height, descendantName ){
-//     for (var i=0; i < height.length; i++) {
-//         if (height[i].name === descendantName) {
-//             alertheight(height[i]);
-//         }
-//     }
-// }
-// function alertDescendants(holdDescendants){
-// 	alert("Here are of the descendants:" + " " + holdDescendants.firstName + " " + holdDescendants.lastName);
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function weightPrompt(){
+/////WeightStart
+function weightPrompt(people){
 	var searchWeight = prompt("How much does the person you are looking for weight (lbs)?");
+	weightSearch(people, searchWeight)
 }
+
+function weightSearch(people, searchWeight) {
+ var weightConvert = parseFloat(searchWeight)
+ var	weight = people.filter(function(person){
+	if(person.weight === weightConvert){
+		return person.firstName && person.lastName;
+ }
+	else{
+		return false;
+	}
+ });
+ pullweightInfo(people, weight);
+ }
+
+function pullweightInfo(people, weight){
+	for (var i=0; i < weight.length; i++) {
+		alertSeach(weight[i]);
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function eyePrompt(people){
 	var searchEyeColor = prompt("What color eyes would you like to search? [1] Blue, [2] Green, [3] Brown, [4] Black, [5] Hazel, [6] All other colors");
 }
