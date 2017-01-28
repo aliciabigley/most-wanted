@@ -89,7 +89,7 @@ function whichTraitsSearch(people){
 
 
 	function SearchByOneTrait(people) {
-		var searchTraits = prompt("What would you like to search by?\n\n Age [1], Height [2], Weight [3], Eye Color [4], Occupation [5]");
+		var searchTraits = prompt("What would you like to search by?\n\n [1] Age, [2] Height, [3] Weight, [4] Eye Color,  [5] Occupation");
 			switch(searchTraits){
 				case "1":
 					agePrompt(people);
@@ -204,33 +204,41 @@ function pullweightInfo(people, weight){
 		alertSeach(weight[i]);
 	}
 }
+///WeightEnds
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+///EyeStart
 function eyePrompt(people){
-	var searchEyeColor = prompt("What color eyes would you like to search? [1] Blue, [2] Green, [3] Brown, [4] Black, [5] Hazel, [6] All other colors");
+	var searchEyeColor = prompt("What color eyes would you like to search? Ie: Blue, Green, Brown, Black, Hazel, or any color");
+	eyeSearch(people, searchEyeColor)
 }
+function eyeSearch(people, searchEyeColor) {
+ var	color = people.filter(function(person){
+	if(person.eyeColor.toLowerCase() === searchEyeColor.toLowerCase()){
+		return person.firstName && person.lastName;
+ }
+	else{
+		return false;
+	}
+ });
+ pullEyeColorInfo(people, color);
+ }
+
+function pullEyeColorInfo(people, color){
+	for (var i=0; i < color.length; i++) {
+		alertSeach(color[i]);
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
 function occupationPrompt(people) {
 	var searchOccupation = prompt("What occupation would you like to search?");
 }
