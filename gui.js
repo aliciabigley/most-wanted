@@ -140,20 +140,85 @@ function searchAge(people, birthYear){
 
 function pullAgeInfo(people, ageSearchValue){
     for (var i=0; i < ageSearchValue.length; i++) {
-      alertDescendants(ageSearchValue[i]);
+      alertSeach(ageSearchValue[i]);
     }
 }
 
+// function alertAge(people, ageSearchValue) {
+// alert("This person meets your age search:" + " " + ageSearchValue.firstName + " " + ageSearchValue.lastName + "\nDOB:" + " " + ageSearchValue.dob);
+// }
 
-function alertAge(people, ageSearchValue) {
 
-alert(ageSearchValue);
-}
+
 
 
 function heightPrompt(people){
-	var searchHeight = prompt("How tall is the person you are looking for ex: 5' 7''?");
+	var height = prompt("How tall is the person you are looking for ex: 5' 7''?");
+	heightConvert(people, height);
 }
+ function heightConvert(people, height){
+	var twelveInch = 12;
+	var heightArray = height.split("'");
+	var splitFt = heightArray[0];
+	var splitIn = heightArray[1].replace('"', '');
+	var feet = parseFloat(splitFt);
+	var inch = parseFloat(splitIn);
+	var feetToInch = twelveInch * feet + inch;
+	heightSearch(people, feetToInch);
+ }
+
+ function heightSearch(people, feetToInch) {
+	var	height = people.filter(function(person){
+		if(person.height === feetToInch){
+			return person.firstName && person.lastName;
+	}
+		else{
+			return false;
+		}
+	});
+	pullheightInfo(people, height);
+	}
+
+function pullheightInfo(people, height){
+    for (var i=0; i < height.length; i++) {
+      alertSeach(height[i]);
+    }
+}
+// function alertheight(people, height, i) {
+// alert("This person meets your height search:" + " " + height[i].firstName + " " + height[i]. lastName);
+// }
+
+// function pullheightInfo(people, height, descendantName ){
+//     for (var i=0; i < height.length; i++) {
+//         if (height[i].name === descendantName) {
+//             alertheight(height[i]);
+//         }
+//     }
+// }
+// function alertDescendants(holdDescendants){
+// 	alert("Here are of the descendants:" + " " + holdDescendants.firstName + " " + holdDescendants.lastName);
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function weightPrompt(){
 	var searchWeight = prompt("How much does the person you are looking for weight (lbs)?");
 }
@@ -220,10 +285,10 @@ function occupationPrompt(people) {
 function pullDescendantInfo(people, holdDescendants, descendantName ){
     for (var i=0; i < holdDescendants.length; i++) {
         if (holdDescendants[i].name === descendantName) {
-            alertDescendants(holdDescendants[i]);
+            alertSeach(holdDescendants[i]);
         }
     }
 }
-function alertDescendants(holdDescendants){
-	alert("Here are of the descendants:" + " " + holdDescendants.firstName + " " + holdDescendants.lastName);
+function alertSeach(holdDescendants){
+	alert("Search Results:" + " " + holdDescendants.firstName + " " + holdDescendants.lastName);
 }
