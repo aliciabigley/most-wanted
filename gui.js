@@ -2,7 +2,7 @@ function initSearch(people){
 var searchType = prompt("What would you like to search by?\n\n[1] Name\n[2] Traits\n[3] Descendants\n[4] Family");
 	switch(searchType){
 		case "1":
-			namePrompt(people);
+			nameSearch(people);
 			break;
 		case "2":
 			whichTraitsSearch(people);
@@ -19,49 +19,92 @@ var searchType = prompt("What would you like to search by?\n\n[1] Name\n[2] Trai
 			break;
 	}
 }
+function promptQuestion(question){
+	do {
+		var input = prompt(question);
+	} while (!input);
+	return input;
+}
+//if else
+function displayResults(people, filterResults){
+	if (filterResults.length === 0){
+		alert("Sorry, we couldn't find anyone with that search request.");}
 
-function namePrompt(people){
-var firstName = prompt("Please type in the FIRST NAME of the person you would like to search for.");
-var lastName = prompt("Please type in the LAST NAME of the person you would like to search for.");
-initSearchByName(people, firstName, lastName);
+	else if (filterResults.length === 1) {
+		var oneResult = filterResults.map(function(person) {
+			return [person.firstName, person.lastName, person.dob, person.occupation]. join(" ");
+		});
+		alert("We found the following result:" + " " + oneResult );
+		}
+		else {
+			var firstNameLastNameMultiResult = filterResults.map(function(person) {
+				return [person.firstName, person.lastName]. join(" ");
+			});
+			alert("We found the following results:" + " " + firstNameLastNameMultiResult );
+
+		}
 }
 
-//short hand filter code- fix your others if you have time
-// function initSearchByName(people, firstName, lastName){
-// 	return people.filter(function(person){ //you can remove people.filter
-// 		retun person.firstName.toLowerCase() === firstName.toLowerCase() && person.lastName.toLowerCase() === lastName.toLowerCase()){
-//
-// 	});
-	// alertNameSearch(people, nameSearchValue)
-//}
+		// case 1:
+		// var oneResult = filterResults.map(function(person) {
+		// 	return [person.firstName, person.lastName, person.dob, person.occupation]. join(" ");
+		// });
+		// alert("We found the following result:" + " " + oneResult );
+		// 	break;
 
-function initSearchByName(people, firstName, lastName){
-	var nameSearchValue =  people.filter(function(person){ //you can remove people.filter
+	// 	default:
+	// 	var firstNameLastNameMultiResult = filterResults.map(function(person) {
+	// 		return [person.firstName, person.lastName]. join(" ");
+	// 	});
+	// 	alert("We found the following results:" + " " + firstNameLastNameMultiResult );
+	//
+	// }
+
+
+function firstNamePrompt(){
+var first = promptQuestion("Please type in the FIRST NAME of the person you would like to search for.");
+return first;
+//var personSearchedFor = initSearchByName(people, firstName, lastName);
+}
+function lastNamePrompt(){
+var last = promptQuestion("Please type in the LAST NAME of the person you would like to search for.");
+return last;
+}
+
+function nameFilter(people, firstName, lastName){
+	return people.filter(function(person){
 		if(person.firstName.toLowerCase() === firstName.toLowerCase() && person.lastName.toLowerCase() === lastName.toLowerCase()){
 			return true;
-		}
-		else{
+		}	else{
 			return false;
 		}
 	});
-	alertNameSearch(people, nameSearchValue);
 }
 
-function alertNameSearch(people, nameSearchValue) {
-	try{
-	alert("Here are your search results:\n" + nameSearchValue[0].firstName + " " + nameSearchValue[0].lastName +
-	"\nGender:" + nameSearchValue[0].gender +
-	"\nDate of Birth:"+ nameSearchValue[0].dob +
-  "\nHeight:" + nameSearchValue[0].height +
-	"\nWeight:"+ nameSearchValue[0].weight +
-	"\nEye Color:"+ nameSearchValue[0].eyeColor +
-	"\nOccupation:"+ nameSearchValue[0].occupation);
-	}
-	catch(err){
-			alert("We couldn't find anyone with that name on the Most Wanted List.");
-			initSearch(people);
-	}
+function nameSearch(people){ //call all name functions here
+var firstName = firstNamePrompt();
+var lastName = lastNamePrompt();
+var filterResults = nameFilter(people, firstName, lastName);
+displayResults(people, filterResults);
 }
+
+
+
+// function alertNameSearch(people, nameSearchValue) {
+// 	try{
+// 	alert("Here are your search results:\n" + nameSearchValue[0].firstName + " " + nameSearchValue[0].lastName +
+// 	"\nGender:" + nameSearchValue[0].gender +
+// 	"\nDate of Birth:"+ nameSearchValue[0].dob +
+//   "\nHeight:" + nameSearchValue[0].height +
+// 	"\nWeight:"+ nameSearchValue[0].weight +
+// 	"\nEye Color:"+ nameSearchValue[0].eyeColor +
+// 	"\nOccupation:"+ nameSearchValue[0].occupation);
+// 	}
+// 	catch(err){
+// 			alert("We couldn't find anyone with that name on the Most Wanted List.");
+// 			initSearch(people);
+// 	}
+// }
 
 
 
@@ -84,10 +127,10 @@ function whichTraitsSearch(people){
 		var searchTraits = prompt("What would you like to search by?\n\n[1] Age\n[2] Height\n[3] Weight\n[4] Eye Color\n[5] Occupation");
 			switch(searchTraits){
 				case "1":
-					agePrompt(people);
+					ageSearch(people);
 					break;
 				case "2":
-					heightPrompt(people);
+					heightSearch(people);
 					break;
 				case "3":
 					weightPrompt(people);
@@ -105,21 +148,23 @@ function whichTraitsSearch(people){
 	}
 }
 ///AgeStart
-function agePrompt(people){
-var age = prompt("How old is the person you are looking for?");
-calculateAgeFromDOB(people, age);
+function agePrompt(){
+var ageInput = promptQuestion("How old is the person you are looking for?");
+return ageInput;
+//calculateAgeFromDOB(people, age);
 }
 
-	function calculateAgeFromDOB(people, age){
+	function calculateAgeFromDOB(age){
 		var today = new Date();
 		var birthDate = parseInt(age);
 		var ageYear = today.getFullYear() - birthDate;
 		var birthYear = ageYear.toString();
-		searchAge (people, birthYear);
+		return birthYear;
+		//searchAge (people, birthYear);
 }
 
-function searchAge(people, birthYear){
-	var	ageSearchValue = people.filter(function(person){
+function ageFilter(people, birthYear){
+	return people.filter(function(person){
 		if(person.dob.slice(-4) === birthYear){
 			return person.firstName && person.lastName;
 		}
@@ -127,22 +172,32 @@ function searchAge(people, birthYear){
 			return false;
 		}
 	});
-	pullAgeInfo(people,ageSearchValue);
+	//pullAgeInfo(people,ageSearchValue);
 }
 
-function pullAgeInfo(people, ageSearchValue){
-    for (var i=0; i < ageSearchValue.length; i++) {
-      alertSeach(people, ageSearchValue[i]);
-    }
+// function pullAgeInfo(people, ageSearchValue){
+//     for (var i=0; i < ageSearchValue.length; i++) {
+//       alertSeach(people, ageSearchValue[i]);
+//     }
+// }
+
+function ageSearch(people){
+var age = agePrompt();
+var calculation = calculateAgeFromDOB(age);
+var filterResults = ageFilter(people, calculation);
+displayResults(people, filterResults);
 }
+
+
 ////AgeEnd
 
 ////HeightStart
-function heightPrompt(people){
-	var height = prompt("How tall is the person you are looking for ex: 5' 7''?");
-	heightConvert(people, height);
+function heightPrompt(){
+	var height = promptQuestion("How tall is the person you are looking for ex: 5' 7''?");
+	return height;
+	//heightConvert(people, height);
 }
- function heightConvert(people, height){
+ function heightConvert(height){
 	var twelveInch = 12;
 	var heightArray = height.split("'");
 	var splitFt = heightArray[0];
@@ -150,11 +205,12 @@ function heightPrompt(people){
 	var feet = parseFloat(splitFt);
 	var inch = parseFloat(splitIn);
 	var feetToInch = twelveInch * feet + inch;
-	heightSearch(people, feetToInch);
+	return feetToInch;
+	//heightSearch(people, feetToInch);
  }
 
- function heightSearch(people, feetToInch) {
-	var	height = people.filter(function(person){
+ function heightFilter(people, feetToInch) {
+	return people.filter(function(person){
 		if(person.height === feetToInch){
 			return person.firstName && person.lastName;
 	}
@@ -162,23 +218,37 @@ function heightPrompt(people){
 			return false;
 		}
 	});
-	pullheightInfo(people, height);
+	//pullheightInfo(people, height);
 	}
 
-function pullheightInfo(people, height){
-    for (var i=0; i < height.length; i++) {
-      alertSeach(people, height[i]);
-    }
+// function pullheightInfo(people, height){
+//     for (var i=0; i < height.length; i++) {
+//       alertSeach(people, height[i]);
+//     }
+// }
+
+function heightSearch(people){
+var height = heightPrompt();
+var calculation = heightConvert(height);
+var filterResults = heightFilter(people, calculation);
+displayResults(people, filterResults);
 }
+// function nameSearch(people){ //call all name functions here
+// var firstName = firstNamePrompt();
+// var lastName = lastNamePrompt();
+// var filterResults = nameFilter(people, firstName, lastName);
+// displayResults(people, filterResults);
+// }
 /////Height End
 
 /////WeightStart
-function weightPrompt(people){
-	var searchWeight = prompt("How much does the person you are looking for weight (lbs)?");
-	weightSearch(people, searchWeight);
+function weightPrompt(){
+	var userInput = promptQuestion("How much does the person you are looking for weight (lbs)?");
+	return userInput;
+	//weightSearch(people, searchWeight);
 }
 
-function weightSearch(people, searchWeight) {
+function weightFilter(searchWeight) {
  var weightConvert = parseFloat(searchWeight);
  var	weight = people.filter(function(person){
 	if(person.weight === weightConvert){
@@ -188,13 +258,19 @@ function weightSearch(people, searchWeight) {
 		return false;
 	}
  });
- pullweightInfo(people, weight);
+ //pullweightInfo(people, weight);
  }
 
-function pullweightInfo(people, weight){
-	for (var i=0; i < weight.length; i++) {
-		alertSeach(people, weight[i]);
-	}
+// function pullweightInfo(people, weight){
+// 	for (var i=0; i < weight.length; i++) {
+// 		alertSeach(people, weight[i]);
+// 	}
+// }
+
+function weightSearch(people){
+var weight = weightPrompt();
+var filterResults = weightFilter(people, weight);
+displayResults(people, filterResults);
 }
 ///WeightEnds
 
