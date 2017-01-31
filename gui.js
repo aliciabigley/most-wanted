@@ -1,4 +1,4 @@
-function initSearch(people){
+function initSearch(people, holdList = [], i = -1){
 var searchType = prompt("What would you like to search by?\n\n[1] Name\n[2] Traits\n[3] Descendants\n[4] Family");
 	switch(searchType){
 		case "1":
@@ -8,7 +8,7 @@ var searchType = prompt("What would you like to search by?\n\n[1] Name\n[2] Trai
 			whichTraitsSearch(people);
 			break;
 			case "3":
-				descendantPrompt(people);
+				decendantSearch(people, holdList, i);
 				break;
 			case "4":
 				familySearch(people);
@@ -79,7 +79,7 @@ function whichTraitsSearch(people){
 			SearchByOneTrait(people);
 			break;
 			case "2":
-			searchAllTraits(people);
+			multiTraitSearch(people);
 				break;
 		default:
 			alert("Oops! That's not an option.");
@@ -265,9 +265,9 @@ function familyPrompt_LastName() {
 // }
 
 ///you are here
-function firstPersonId(people, fitstPersonFilterResults){
+function indexZeroID(people, firsttPersonFilterResults){
 	//try{
-		return fitstPersonFilterResults[0].id;
+		return firsttPersonFilterResults[0].id;
 	// }
 	// catch(err){
 	// 		alert("We couldn't find anyone with that name on the Most Wanted List.");
@@ -275,7 +275,7 @@ function firstPersonId(people, fitstPersonFilterResults){
 	// }
 }
 
-function findFamily(people, searchId){
+function familyFilter(people, searchId){
 return people.filter(function(person){
 	if(person.parents[0] === searchId || person.parents[1] === searchId || person.currentSpouse === searchId){
 			return true;
@@ -303,69 +303,88 @@ return people.filter(function(person){
 function familySearch(people){
 var firstName = familyPrompt_FirstName();
 var lastName = familyPrompt_LastName();
-var fitstPersonFilterResults = nameFilter(people, firstName, lastName);
-var idForSearchedPerson = firstPersonId(people, fitstPersonFilterResults);
-var filterResults = findFamily(people, idForSearchedPerson);
+var firstPersonFilterResults = nameFilter(people, firstName, lastName);
+var idForSearchedPerson = indexZeroID(people, firstPersonFilterResults);
+var filterResults = familyFilter(people, idForSearchedPerson);
 displayResults(people, filterResults);
 }
 
 
 //SearchByAllTraits
-	function searchAllTraits(people) {
-		var searchMultipleTraits = prompt("Search by multiple traits. Your options are Eye Color, Height, Weight, Age, or Occupation. \nPlease type your search terms, separated by commas");
-		splitTraitSearch(people, searchMultipleTraits);
+	function searchAllTraits() {
+		var multipleTraitsInput = promptQuestion("Search by multiple traits. Your options are Eye Color, Height, Weight, Age, or Occupation. \nPlease type your search terms, separated by commas");
+		return multipleTraitsInput;
+		//return multipleTraitsInput;
 		}
-function splitTraitSearch(people, searchMultipleTraits){
-	var traitsRemoveSpacesArray = searchMultipleTraits.replace(/ /g, '');
+function splitSpaceTraitSearch(multipleTraitsInput){
+	var traitsRemoveSpacesArray = multipleTraitsInput.replace(/ /g, '');
+	//var traitCommaSplit = traitsRemoveSpacesArray.split(",");
+	return traitsRemoveSpacesArray;
+}
+function splitCommaTraitSearch(traitsRemoveSpacesArray){
+	//var traitsRemoveSpacesArray = searchMultipleTraits.replace(/ /g, '');
 	var traitCommaSplit = traitsRemoveSpacesArray.split(",");
+	return traitCommaSplit;
+}
+function multiTraitSearch(people){
+	var multipleTraits = searchAllTraits();
+	var removeSpace = splitSpaceTraitSearch(multipleTraits);
+	var splitComma = splitCommaTraitSearch(removeSpace);
+
+}
 	//index 0 = eye, 1 = height, 2= weight, 3= age, 4= occupation
 	//1 parse to float
 	//2 parse to float
 	//3 convert
 
-	var multiTrait= people.filter(function(person){
-		if(person.eyeColor.toLowerCase() === traitCommaSplit.toLowerCase()
-		&& person.weight === traitCommaSplit
-		&& person.occupation.toLowerCase() === traitCommaSplit.toLowerCase()){
-			return people.firstName && people.lastName;
-		}
-	}).map(function(person){
-		return{
-			meetsRequirements: " " + person.firstName + " " + person.lastName
-		};
-	});
-}
 
-	function descendantPrompt(people){
-	var firstName = prompt("Please type in the FIRST NAME of the person who's descendants you would like to see");
-	var lastName = prompt("Please type in the LAST NAME of the person who's descendants you would like to see");
-	initSearchDescendants(people, firstName, lastName);
-	}
 
-	function initSearchDescendants(people, firstName, lastName){
-		var	nameSearchValue = people.filter(function(person){
-			if(person.firstName.toLowerCase() === firstName.toLowerCase() && person.lastName.toLowerCase() === lastName.toLowerCase()){
-				return true;
-			}
-			else{
-				return false;
-			}
-		});
-		nameSearchForDescendants(people, nameSearchValue);
-	}
+////DO NOT DELETE
+// 	var multiTrait= people.filter(function(person){
+// 		if(person.eyeColor.toLowerCase() === traitCommaSplit.toLowerCase()
+// 		&& person.weight === traitCommaSplit
+// 		&& person.occupation.toLowerCase() === traitCommaSplit.toLowerCase()){
+// 			return people.firstName && people.lastName;
+// 		}
+// 	}).map(function(person){
+// 		return{
+// 			meetsRequirements: " " + person.firstName + " " + person.lastName
+// 		};
+// 	});
+// }
 
-	function nameSearchForDescendants(people, nameSearchValue){
-		try{
-			var searchId = nameSearchValue[0].id;
-		}
-		catch(err){
-				alert("We couldn't find anyone with that name on the Most Wanted List.");
-				initSearch(people);
-		}
-	findDescendants(people, searchId);
-	}
+////DO NOT DELETE
 
-	function findDescendants(people, searchId, holdList = [], i = -1){
+	// function descendantPrompt(people){
+	// var firstName = prompt("Please type in the FIRST NAME of the person who's descendants you would like to see");
+	// var lastName = prompt("Please type in the LAST NAME of the person who's descendants you would like to see");
+	// initSearchDescendants(people, firstName, lastName);
+	// }
+
+	// function initSearchDescendants(people, firstName, lastName){
+	// 	return people.filter(function(person){
+	// 		if(person.firstName.toLowerCase() === firstName.toLowerCase() && person.lastName.toLowerCase() === lastName.toLowerCase()){
+	// 			return true;
+	// 		}
+	// 		else{
+	// 			return false;
+	// 		}
+	// 	});
+	// 	//nameSearchForDescendants(people, nameSearchValue);
+	// }
+
+	// function nameSearchForDescendants(people, nameSearchValue){
+	// 	try{
+	// 		var searchId = nameSearchValue[0].id;
+	// 	}
+	// 	catch(err){
+	// 			alert("We couldn't find anyone with that name on the Most Wanted List.");
+	// 			initSearch(people);
+	// 	}
+	// findDescendants(people, searchId);
+	// }
+
+	function descendantFilter(people, searchId, holdList = [], i = -1){
 	var listOfDescendants = people.filter(function(person){
 		if(person.parents[0] === searchId || person.parents[1] === searchId){
 				return true;
@@ -379,26 +398,36 @@ function splitTraitSearch(people, searchMultipleTraits){
 
 		if(i < holdList.length -1){
 			i++;
-			return findDescendants(people, holdList[i].id, holdList, i);
+			//return findDescendants(people, holdList[i].id, holdList, i);
 		}
 		else{
-			pullDescendantInfo(people, holdList);
+			return holdList;
+			//pullDescendantInfo(people, holdList);
 		}
 }
 
-function pullDescendantInfo(people, holdList, descendantName ){
-    for (var i=0; i < holdList.length; i++) {
-        if (holdList[i].name === descendantName) {
-            alertSeach(holdList[i]);
-        }
-    }
+// function pullDescendantInfo(people, holdList, descendantName ){
+//     for (var i=0; i < holdList.length; i++) {
+//         if (holdList[i].name === descendantName) {
+//             alertSeach(holdList[i]);
+//         }
+//     }
+// }
+
+function decendantSearch(people, holdList, i){
+	var firstName = firstNamePrompt();
+	var lastName = lastNamePrompt();
+	var firstPersonFilterResults = nameFilter(people, firstName, lastName);
+	var idForSearchedPerson = indexZeroID(people, firstPersonFilterResults);
+	var descendantsFound = descendantFilter(people, idForSearchedPerson, holdList, i);
+	indexZeroID(people, descendantsFound);
 }
 
-function alertSeach(people, holdList){
-try {
-	alert("Search Results:" + " " + holdList.firstName + " " + holdList.lastName);
-} catch (err) {
-	alert("Oops! We couldn't find anyone who met your search requirements. Please try a different search.");
-	initSearch(people);
-}
-}
+// function alertSeach(people, holdList){
+// try {
+// 	alert("Search Results:" + " " + holdList.firstName + " " + holdList.lastName);
+// } catch (err) {
+// 	alert("Oops! We couldn't find anyone who met your search requirements. Please try a different search.");
+// 	initSearch(people);
+// }
+// }
