@@ -352,7 +352,6 @@ function multiTraitSearch(people){
 // 		};
 // 	});
 // }
-
 ////DO NOT DELETE
 
 	// function descendantPrompt(people){
@@ -419,9 +418,10 @@ function decendantSearch(people, holdList, i){
 	var lastName = lastNamePrompt();
 	var firstPersonFilterResults = nameFilter(people, firstName, lastName);
 	var idForSearchedPerson = indexZeroID(people, firstPersonFilterResults);
-	var descendantsFound = descendantFilter(people, idForSearchedPerson, holdList, i);
-	indexZeroID(people, descendantsFound);
+	var filterResults = descendantFilter(people, idForSearchedPerson, holdList, i);
+	displayResults(people, filterResults);
 }
+
 
 // function alertSeach(people, holdList){
 // try {
