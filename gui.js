@@ -39,10 +39,9 @@ function displayResults(people, filterResults){
 		}
 		else {
 			var firstNameLastNameMultiResult = filterResults.map(function(person) {
-				return ["\n"+ "Name:" + " " + person.firstName, person.lastName]. join(" ");
+				return ["\n"+ "Name:" + " " + person.firstName, person.lastName].join(" ");
 			});
 			alert("We found the following results:" + " " + firstNameLastNameMultiResult + " "  );
-
 		}
 	}
 
@@ -265,15 +264,25 @@ function familyPrompt_LastName() {
 // }
 
 ///you are here
-function indexZeroID(people, firsttPersonFilterResults){
-	//try{
-		return firsttPersonFilterResults[0].id;
-	// }
-	// catch(err){
-	// 		alert("We couldn't find anyone with that name on the Most Wanted List.");
-	// 		initSearch(people);
-	// }
+function indexZeroID(people, firstPersonFilterResults){
+	try{
+		return firstPersonFilterResults[0].id;
+	}
+	catch(err){
+			alert("We couldn't find anyone with that name on the Most Wanted List.");
+			initSearch(people);
+	}
 }
+
+// function nameFilter(people, firstName, lastName){
+// 	return people.filter(function(person){
+// 		if(person.firstName.toLowerCase() === firstName.toLowerCase() && person.lastName.toLowerCase() === lastName.toLowerCase()){
+// 			return true;
+// 		}	else{
+// 			return false;
+// 		}
+// 	});
+// }
 
 function familyFilter(people, searchId){
 return people.filter(function(person){
@@ -284,21 +293,8 @@ return people.filter(function(person){
 			return false;
 		}
 	});
-// for(var i=0; i < listOfFamily.length; i++){
-// 	if(listOfFamily.currentSpouse != null){
-// 		return listOfFamily.currentSpouse;
-// 	}
-// 	else{
-// 			return listOfFamily.currentSpouse;
-	}
-//}
-//	pullFamily(people, listOfFamily);
-//}
-// function pullFamily(people, listOfFamily){
-// 	for (var i=0; i < listOfFamily.length; i++) {
-// 		alertSeach(people, listOfFamily[i]);
-// 	}
-// }
+}
+
 
 function familySearch(people){
 var firstName = familyPrompt_FirstName();
@@ -383,7 +379,7 @@ function multiTraitSearch(people){
 	// findDescendants(people, searchId);
 	// }
 
-	function descendantFilter(people, searchId, holdList = [], i = -1){
+	var searchDescendants = function descendantFilter(people, searchId, holdList = [], i = -1){
 	var listOfDescendants = people.filter(function(person){
 		if(person.parents[0] === searchId || person.parents[1] === searchId){
 				return true;
@@ -397,7 +393,7 @@ function multiTraitSearch(people){
 
 		if(i < holdList.length -1){
 			i++;
-			//return findDescendants(people, holdList[i].id, holdList, i);
+			return searchDescendants(people, holdList[i].id, holdList, i);
 		}
 		else{
 			return holdList;
@@ -418,7 +414,7 @@ function decendantSearch(people, holdList, i){
 	var lastName = lastNamePrompt();
 	var firstPersonFilterResults = nameFilter(people, firstName, lastName);
 	var idForSearchedPerson = indexZeroID(people, firstPersonFilterResults);
-	var filterResults = descendantFilter(people, idForSearchedPerson, holdList, i);
+	var filterResults = searchDescendants(people, idForSearchedPerson, holdList, i);
 	displayResults(people, filterResults);
 }
 
