@@ -24,7 +24,7 @@ describe('nameFilter', function(){
 });
 
 
-describe('calculateAgeFromDOB', function(){
+describe('calculateAgeFromDOB', function()
   beforeEach(function(){
   });
   it('Age check 45', function(){
@@ -543,18 +543,3 @@ describe('splitCommaTraitSearch', function() {
     expect(splitCommaTraitSearch("blue,5'7\",100,29,doctor")).toEqual(multiTrait);
   });
 });
-
-// describe('splitCommaTraitSearch', function() {
-//   beforeEach(function() {
-//   });
-//   it('splitCommaTraitSearch', function() {
-//     var multiTrait = ["blue", "5'7\"", "100", "29", "doctor"]
-//
-// describe('splitCommaTraitSearch', function(){
-//   beforeEach(function(){
-//   });
-//   it('splitCommaTraitSearch', function(){
-//     var notMultiTrait =["blue","5'7\"","100","29","doctor"]
-//     expect(splitCommaTraitSearch("blue, 5'7\", 100, 29, doctor")).not.toEqual(notMultiTrait);
-//   });
-// });
