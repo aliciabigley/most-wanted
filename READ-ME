@@ -1,0 +1,86 @@
+Most Wanted- JavaScript
+Project for devCodeCamp
+
+First JS project
+
+Goal 1
+User Interface:
+Getting User Input:
+Build out the functionality for returning a person’s information from their full name (first and last).
+Build out search by trait (eye color, height, weight, age, occupation).
+
+_____
+
+Goal 2
+Getting User Input— Build out the functionality for returning a person’s information
+from their full name (first and last).
+Question: All of their info, or just first and last name -everything
+_____
+
+Goal 3 —Get Descendants— Build out the functionality for returning a person’s
+descendants. The user just needs the list of their full names. Descendants are limited to
+relatives ‘by blood’. Must use recursion.
+
+____
+
+Goal 4 —Get Family— Build out the functionality for returning a person’s immediate family.
+The user just needs the list of their full names. Immediate family includes a person’s parents,
+siblings, spouse (current only), and children. Must use iteration.
+
+_____
+
+Goal 5 —Get Next of Kin— Build out the functionality for returning a person’s next of kin.
+The user just needs their full name. If none is found, tell the user. To find the next of kin, using
+the following order of precedence (eldest first):
+
+1. Spouse
+
+2. Child
+
+3. Parent
+
+4. Sibling
+
+5. Grandchild
+
+6. Grandparent
+
+7. Niece/Nephew
+
+8. Aunt/Uncle
+
+9. Great Grandchild
+
+10. Great Grandparent
+
+_____
+
+
+Goal 6 —Search and Filter— Build out the functionality for finding a person based on search
+criteria. The user may enter multiple (up to 5) characteristics of a user. The user should get a
+list of living people back that meet all of the criteria. A user should be asked, “Please type your
+search terms, separated by commas”. Your code will need to parse out the terms, and
+validate them. If any of the terms don’t match the type of terms you accept, ask the user to
+respecify or ‘leave blank to remove’. Must use some combination of Map, Filter, Reduce.
+Types of terms you must accept:
+
+• Age (only in the format #)
+
+• Age Range (only in the format #-#)
+
+• Height (only in the format #’#”)
+
+• Weight (only in the format #lbs)
+
+• Occupation (single word)
+
+• Eye color (single word)
+
+Hints and assumptions you may make:
+
+• Start by removing spaces from the input, then split the input string on commas
+• A # is a one to four digit number
+• Assume that eye color and occupation can be matched to each other (interchangeable keywords)
+
+
+
